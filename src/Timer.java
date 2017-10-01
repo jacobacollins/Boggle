@@ -3,21 +3,25 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 public class Timer {
 
+    public int getTime() {
+        return time;
+    }
+
     private  int time;
-    private  int seconds;
-    private int minutes;
+
     public Timer(Label updated, int mil){
 
         Timeline timeline = new Timeline();
         timeline .setCycleCount(Timeline.INDEFINITE);
         time = mil;
-        seconds = (time /1000);
-        minutes = (seconds / 60) ;
+
         timeline.getKeyFrames().add(
                 new KeyFrame(Duration.seconds(1),
                         new EventHandler<ActionEvent>() {
@@ -26,10 +30,15 @@ public class Timer {
                             public void handle(ActionEvent event) {
 
 
-                                updated.setText(minutes + " min " + seconds + " sec");
+                                    updated.setAlignment(Pos.TOP_CENTER);
+                                updated.setAlignment(Pos.CENTER);
 
-                                seconds--;
+                                updated.setText(time / 1000 / 60 + " min " + ((time / 1000) % 60) + " sec");
 
+                                    updated.setAlignment(Pos.CENTER);
+                                    if(time > 0) {
+                                        time -= 1000;
+                                    }
                             }
                         })
         );

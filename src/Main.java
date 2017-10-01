@@ -5,13 +5,18 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -25,6 +30,9 @@ public class Main extends Application {
     private ArrayList<String> dictionary = new ArrayList<String>();
     private ArrayList<String> correctAnswers;
     private int blah = 180;
+
+
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         BorderPane root = new BorderPane();
@@ -32,11 +40,39 @@ public class Main extends Application {
 
         Board boggle = new Board(boardSize);
 
-        /*
-        Label timer = new Label("timer");
+        VBox leftPane = new VBox();
+        leftPane.setAlignment(Pos.CENTER);
+        leftPane.setSpacing(65);
+        leftPane.setPadding(new Insets(0, 20, 0, 20));
+
+        Button add = new Button("Add Word");
+        add.setPrefSize(75,30);
+        Button clear = new Button("Clear");
+        clear.setPrefSize(75,30);
+        Label timer = new Label("");
         timer.setFont(Font.font(20));
         timer.setAlignment(Pos.CENTER);
-        root.setTop(timer);
+
+        leftPane.getChildren().add(timer);
+        leftPane.getChildren().add(add);
+        leftPane.getChildren().add(clear);
+
+        root.setLeft(leftPane);
+
+        HBox rightPane = new HBox();
+        rightPane.setSpacing(20);
+        rightPane.setAlignment(Pos.CENTER);
+        rightPane.setPadding(new Insets(27,20,27,20));
+        TextArea correct = new TextArea("Correct Words");
+        correct.setPrefSize(95, 400);
+
+        TextArea incorrect = new TextArea("Incorrect Words");
+        incorrect.setPrefSize(105,400);
+        rightPane.getChildren().add(correct);
+        rightPane.getChildren().add(incorrect);
+
+        root.setRight(rightPane);
+
 
 
        Timer timer1 = new Timer(timer, 180000);
@@ -45,20 +81,40 @@ public class Main extends Application {
 
 
         GridPane center = new GridPane();
+        root.setCenter(center);
+
         for(int i = 0; i < boardSize; i++){
             for(int j = 0; j < boardSize; j++){
                Label label =  new Label(String.valueOf(boggle.getBoardChar(i, j)));
                label.setFont(Font.font(20));
-               center.setHgap(20);
-               center.setVgap(5);
-                center.add(label, i, j);
+
+
+               Button b = new Button(String.valueOf(boggle.getBoardChar(i,j)));
+                b.setPrefSize(45,45);
+                b.setStyle("-fx-background-color: wheat; " +
+                           "-fx-border-color: black;" +
+                           "-fx-padding: 5 5 5 5");
+
+                b.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        if(event.getSource().equals(b)){
+                            System.out.print(b.getText());
+                           // b.setStyle("-fx-background-color:baby-blue");
+                        }
+                    }
+                });
+
+                center.add(b, i, j);
+
+
 
             }
         }
 
         center.setAlignment(Pos.CENTER);
         root.setCenter(center);
-*/
+
 
         FlowPane bottom = new FlowPane();
         TextField entry = new TextField("Enter your guesses here");
@@ -108,7 +164,7 @@ public class Main extends Application {
 
 
         primaryStage.setTitle("Boggle");
-        primaryStage.setScene(new Scene(root, 350, 300));
+        primaryStage.setScene(new Scene(root, 675, 300));
         primaryStage.show();
 
     }
