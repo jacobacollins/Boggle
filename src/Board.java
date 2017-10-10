@@ -13,9 +13,15 @@ public class Board {
     private char[][] boardArray;
     private int charnumber;
     private int percentage;
-    private  String str;
+    private int charFrequency = 0;
+
+
     private boolean [][] visited;
 
+    /**
+     * Constructor for back end board grid
+     * @param boardSize The size of the board we would like to create
+     */
     public Board(int boardSize){
         random = new Random();
         boardArray = new char[boardSize][boardSize];
@@ -25,10 +31,16 @@ public class Board {
             }
         }
         visited = new boolean[boardSize][boardSize];
+
     }
 
 
-
+    /**
+     * Finds all valid words given the dictionary arrayList
+     * @param board char array to check words for
+     * @param dictionary what the char array is checked against
+     * @return returns the valid words found on the board.
+     */
     public List<String> findAllWords(char[][] board, ArrayList<String> dictionary) {
         ArrayList<String> result = new ArrayList<String>();
 
@@ -51,31 +63,40 @@ public class Board {
         return result;
     }
 
-    public boolean depthFirstSearch(char[][] board, String word, int row, int col, int k) {
+    /**
+     * Depth First search that will check for valid words on the bogggle board.
+     * @param board char array representing the board
+     * @param word the string to be checked for validity
+     * @param row the row to be checked
+     * @param col the column to be checked
+     * @param wordSize the size of the word
+     * @return true or false based on the validity of a word
+     */
+    public boolean depthFirstSearch(char[][] board, String word, int row, int col, int wordSize) {
 
 
-        if (row < 0 || col < 0 || row >= board.length || col >= board.length || k > word.length() - 1) {
+        if (row < 0 || col < 0 || row >= board.length || col >= board.length || wordSize > word.length() - 1) {
             return false;
         }
 
 
-        if (board[row][col] == word.charAt(k)) {
+        if (board[row][col] == word.charAt(wordSize)) {
             char temp = board[row][col];
             visited[row][col] = true;
           // board[row][col] = '#';
 
-            if (k == word.length() - 1) {
+            if (wordSize == word.length() - 1) {
 
                 return true;
             } else if (
                     //checks going vertically upwards
-                    depthFirstSearch(board, word, row - 1, col, k + 1)
+                    depthFirstSearch(board, word, row - 1, col, wordSize + 1)
                     //checks going vertically downwards
-                    || depthFirstSearch(board, word, row + 1, col, k + 1)
+                    || depthFirstSearch(board, word, row + 1, col, wordSize + 1)
                     //checks going horizontally leftwards
-                    || depthFirstSearch(board, word, row, col - 1, k + 1)
+                    || depthFirstSearch(board, word, row, col - 1, wordSize + 1)
                     //checks going horizontally rightwards
-                    || depthFirstSearch(board, word, row, col + 1, k + 1)
+                    || depthFirstSearch(board, word, row, col + 1, wordSize + 1)
                     //makes sure that the cell isn't already visited
                     && !visited[row][col]
                     ) {
@@ -94,7 +115,13 @@ public class Board {
     }
 
 
-
+    /**
+     * Read lines will check the txt file provided as the dictionary and put it into an ArrayList
+     * @param file Dictionary to be used
+     * @param dictionary ArrayList that will hold the dictionary
+     * @return The dictionary ArrayList
+     * @throws IOException
+     */
 
     public ArrayList<String> readLines(String file, ArrayList<String> dictionary) throws IOException
     {
@@ -114,71 +141,133 @@ public class Board {
         return dictionary;
     }
 
+    /**
+     * Returns array position i , j so that we can access the char from that position
+     * @param i the row coordinate
+     * @param j the column coordinate
+     * @return Array position
+     */
     public char getBoardChar(int i, int j) {
         return boardArray[i][j];
     }
+
+
+    /**
+     * Utility method that returns the boardArray
+     * @return boardArray returns whole array
+     */
     public char[][] getBoardArray() {
         return boardArray;
     }
 
+
+    /**
+     * This is a utility function to check and see if a letter appears more than 4 times in an array
+     * @param c Char to be checked for
+     * @return Returns true or false based on the frequency of chars in the array.
+     */
+    private boolean charFrequency(char c){
+        for(int j =0; j < boardArray.length; j++){
+            for(int k = 0; k < boardArray.length; k++){
+                if(boardArray[j][k] == c){
+                    charFrequency++;
+                }else if(charFrequency == 4){
+                    return true;
+                }
+            }
+        }
+        charFrequency = 0;
+        return false;
+    }
     //statistics taken from this website
 // https://www.math.cornell.edu/~mec/2003-2004/cryptography/subs/frequencies.html
+
+    /**
+     * This will generate the chars for the board.
+     * @return char The char that will be used in the board array
+     */
     private char charGenerator() {
 
         charnumber = random.nextInt(100000);
         percentage = charnumber/8500;
         if(percentage < 0.07){
-            return 'z';
+         if(charFrequency('z')){ return charGenerator();}
+            else {return 'z';}
         } else if(percentage < 0.10){
-            return 'j';
+            if(charFrequency('j')){ return charGenerator();}
+            else {return 'j';}
         } else if(percentage < 0.11){
-            return 'q';
+            if(charFrequency('q')){ return charGenerator();}
+            else {return 'q';}
         } else if(percentage < 0.17){
-            return 'x';
+            if(charFrequency('x')){ return charGenerator();}
+            else {return 'x';}
         } else if(percentage < 0.69){
-            return 'k';
+            if(charFrequency('k')){ return charGenerator();}
+            else {return 'k';}
         } else if(percentage < 1.11){
-            return 'v';
+            if(charFrequency('v')){ return charGenerator();}
+            else {return 'v';}
         } else if(percentage < 1.49){
-            return 'b';
+            if(charFrequency('b')){ return charGenerator();}
+            else {return 'b';}
         } else if(percentage < 1.82){
-            return 'p';
+            if(charFrequency('p')){ return charGenerator();}
+            else {return 'p';}
         } else if(percentage < 2.03){
-            return 'g';
+            if(charFrequency('g')){ return charGenerator();}
+            else {return 'g';}
         } else if(percentage < 2.09){
-            return 'w';
+            if(charFrequency('w')){ return charGenerator();}
+            else {return 'w';}
         } else if(percentage < 2.11){
-            return 'y';
+            if(charFrequency('y')){ return charGenerator();}
+            else {return 'y';}
         } else if(percentage < 2.30){
-            return 'f';
+            if(charFrequency('f')){ return charGenerator();}
+            else {return 'f';}
         } else if(percentage < 2.61){
-            return 'm';
+            if(charFrequency('m')){ return charGenerator();}
+            else {return 'm';}
         } else if(percentage < 2.71){
-            return 'c';
+            if(charFrequency('c')){ return charGenerator();}
+            else {return 'c';}
         } else if(percentage < 2.88){
-            return 'u';
+            if(charFrequency('u')){ return charGenerator();}
+            else {return 'u';}
         } else if(percentage < 3.98){
-            return 'l';
+            if(charFrequency('l')){ return charGenerator();}
+            else {return 'l';}
         } else if(percentage < 4.32){
-            return 'd';
+            if(charFrequency('d')){ return charGenerator();}
+            else {return 'd';}
         } else if(percentage < 5.92){
-            return 'h';
+            if(charFrequency('h')){ return charGenerator();}
+            else {return 'h';}
         } else if(percentage < 6.02){
-            return 'r';
+            if(charFrequency('r')){ return charGenerator();}
+            else {return 'r';}
         } else if(percentage < 6.28){
-            return 's';
+            if(charFrequency('s')){ return charGenerator();}
+            else {return 's';}
         } else if(percentage < 6.95){
-            return 'n';
+            if(charFrequency('n')){ return charGenerator();}
+            else {return 'n';}
         } else if(percentage < 7.31){
-            return 'i';
+            if(charFrequency('i')){ return charGenerator();}
+            else {return 'i';}
         } else if(percentage < 7.68){
-            return 'o';
+            if(charFrequency('o')){ return charGenerator();}
+            else {return 'o';}
         } else if(percentage < 8.12){
-            return 'a';
+            if(charFrequency('a')){ return charGenerator();}
+            else {return 'a';}
         } else if(percentage < 9.02){
-            return 't';
+            if(charFrequency('t')){ return charGenerator();}
+            else {return 't';}
         } else {
-            return 'e';
+            if(charFrequency('e')){ return charGenerator();}
+            else {return 'e';}
         }
         }
 
