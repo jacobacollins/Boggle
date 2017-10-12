@@ -66,7 +66,7 @@ public class BoggleGUI extends Application {
         boggle = new Board(boardSize);
         boggle.readLines(dictionary);
         correctAnswers = new ArrayList<String>(boggle.findAllWords(boggle.getBoardArray(),  dictionary));
-        System.out.println(dictionary);
+
 
 
         rightGuesses = new ArrayList<String>();
@@ -323,11 +323,11 @@ public class BoggleGUI extends Application {
             public void handle(ActionEvent event)
             {
                 if (entry.getText() != null
-                        && event.getSource() == entry
+                        && event.getSource() == entry 
                         && !entry.getText().isEmpty())
                 {
 
-                    if (dictionary.contains(entry.getText()))
+                    if (correctAnswers.contains(entry.getText()))
                     {
 
                         guesses.setText(entry.getText() + " is a valid word");
