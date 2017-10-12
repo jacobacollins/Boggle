@@ -34,7 +34,7 @@ public class BoggleGUI extends Application {
     private HBox rightPane;
     private TextArea correct, incorrect;
     private GridPane center;
-    private FlowPane bottom;
+    private FlowPane bottom; 
     private TextField entry;
 
 
@@ -149,8 +149,8 @@ public class BoggleGUI extends Application {
 
 
         //adding various listeners
-       // addButtonListener();
-       // clearButtonListener();
+        addButtonListener();
+        clearButtonListener();
         textEntryListener();
 
         //prepping the stage
@@ -175,7 +175,7 @@ public class BoggleGUI extends Application {
                 boardButtons[i][j].setStyle("-fx-background-color: wheat; " +
                         "-fx-border-color: black;" +
                         "-fx-padding: 5 5 5 5");
-             //   boardButtonListener(boardButtons[i][j]);
+                 boardButtonListener(boardButtons[i][j]);
 
                 center.add(boardButtons[i][j], i, j);
             }
@@ -323,7 +323,7 @@ public class BoggleGUI extends Application {
             public void handle(ActionEvent event)
             {
                 if (entry.getText() != null
-                        && event.getSource() == entry 
+                        && event.getSource() == entry
                         && !entry.getText().isEmpty())
                 {
 

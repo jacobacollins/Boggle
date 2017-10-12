@@ -35,31 +35,23 @@ public class Board {
 
 
     /**
-     * Finds all valid words given the dictionary arrayList
-     * @param board char array to check words for
-     * @param dictionary what the char array is checked against
-     * @return returns the valid words found on the board.
+     * This is a utility function to check and see if a letter appears more than 4 times in an array
+     *
+     * @param c Char to be checked for
+     * @return Returns true or false based on the frequency of chars in the array.
      */
-    public List<String> findAllWords(char[][] board, ArrayList<String> dictionary) {
-        ArrayList<String> result = new ArrayList<String>();
-
-
-        for (int i = 0; i < dictionary.size(); i++) {
-            boolean isWord = false;
-            for (int j = 0; j < boardArray.length; j++) {
-                for (int k = 0; k < boardArray.length; k++) {
-
-                    if (depthFirstSearch(board, dictionary.get(i), j, k, 0) ) {
-                        isWord = true;
-                    }
+    private boolean charFrequency(char c) {
+        for (int j = 0; j < boardArray.length; j++) {
+            for (int k = 0; k < boardArray.length; k++) {
+                if (boardArray[j][k] == c) {
+                    ++charFrequency;
+                } else if (charFrequency == 4) {
+                    return true;
                 }
             }
-            if (isWord) {
-                result.add(dictionary.get(i));
-            }
         }
-
-        return result;
+        charFrequency = 0;
+        return false;
     }
 
     /**
@@ -71,7 +63,7 @@ public class Board {
      * @param wordSize the size of the word
      * @return true or false based on the validity of a word
      */
-    public boolean depthFirstSearch(char[][] board, String word, int row, int col, int wordSize) {
+    private boolean depthFirstSearch(char[][] board, String word, int row, int col, int wordSize) {
 
 
         if (row < 0 || col < 0 || row >= board.length || col >= board.length || wordSize > word.length() - 1) {
@@ -113,74 +105,6 @@ public class Board {
         return false;
     }
 
-
-    /**
-     * Read lines will check the txt file provided as the dictionary and put it into an ArrayList
-     * @param dictionary ArrayList that will hold the dictionary
-     * @return The dictionary ArrayList
-     * @throws IOException
-     */
-
-    public ArrayList<String> readLines(ArrayList<String> dictionary) throws IOException
-    {
-        FileReader fileReader = new FileReader(file);
-
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-        String line = null;
-
-        while ((line = bufferedReader.readLine()) != null)
-        {
-            dictionary.add(line);
-        }
-
-        bufferedReader.close();
-
-        return dictionary;
-    }
-
-
-    /**
-     * Returns array position i , j so that we can access the char from that position
-     *
-     * @param i the row coordinate
-     * @param j the column coordinate
-     * @return Array position
-     */
-    public char getBoardChar(int i, int j) {
-        return boardArray[i][j];
-    }
-
-
-    /**
-     * Utility method that returns the boardArray
-     *
-     * @return boardArray returns whole array
-     */
-    public char[][] getBoardArray() {
-        return boardArray;
-    }
-
-
-    /**
-     * This is a utility function to check and see if a letter appears more than 4 times in an array
-     *
-     * @param c Char to be checked for
-     * @return Returns true or false based on the frequency of chars in the array.
-     */
-    private boolean charFrequency(char c) {
-        for (int j = 0; j < boardArray.length; j++) {
-            for (int k = 0; k < boardArray.length; k++) {
-                if (boardArray[j][k] == c) {
-                    ++charFrequency;
-                } else if (charFrequency == 4) {
-                    return true;
-                }
-            }
-        }
-        charFrequency = 0;
-        return false;
-    }
     //statistics taken from this website
 // https://www.math.cornell.edu/~mec/2003-2004/cryptography/subs/frequencies.html
 
@@ -471,5 +395,85 @@ public class Board {
             }
         }
     }
+
+
+    /**
+     * Finds all valid words given the dictionary arrayList
+     * @param board char array to check words for
+     * @param dictionary what the char array is checked against
+     * @return returns the valid words found on the board.
+     */
+    public List<String> findAllWords(char[][] board, ArrayList<String> dictionary) {
+        ArrayList<String> result = new ArrayList<String>();
+
+
+        for (int i = 0; i < dictionary.size(); i++) {
+            boolean isWord = false;
+            for (int j = 0; j < boardArray.length; j++) {
+                for (int k = 0; k < boardArray.length; k++) {
+
+                    if (depthFirstSearch(board, dictionary.get(i), j, k, 0) ) {
+                        isWord = true;
+                    }
+                }
+            }
+            if (isWord) {
+                result.add(dictionary.get(i));
+            }
+        }
+
+        return result;
+    }
+
+
+
+    /**
+     * Read lines will check the txt file provided as the dictionary and put it into an ArrayList
+     * @param dictionary ArrayList that will hold the dictionary
+     * @return The dictionary ArrayList
+     * @throws IOException
+     */
+
+    public ArrayList<String> readLines(ArrayList<String> dictionary) throws IOException
+    {
+        FileReader fileReader = new FileReader(file);
+
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+        String line = null;
+
+        while ((line = bufferedReader.readLine()) != null)
+        {
+            dictionary.add(line);
+        }
+
+        bufferedReader.close();
+
+        return dictionary;
+    }
+
+
+    /**
+     * Returns array position i , j so that we can access the char from that position
+     *
+     * @param i the row coordinate
+     * @param j the column coordinate
+     * @return Array position
+     */
+    public char getBoardChar(int i, int j) {
+        return boardArray[i][j];
+    }
+
+
+    /**
+     * Utility method that returns the boardArray
+     *
+     * @return boardArray returns whole array
+     */
+    public char[][] getBoardArray() {
+        return boardArray;
+    }
+
+
 
 }
