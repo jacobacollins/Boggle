@@ -4,7 +4,11 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+/**
+ * @author Jacob Collins
+ * @version 1.3
+ * Back End Board for the Boggle Game
+ */
 public class Board {
 
         private static final String file = "src/OpenEnglishWordList.txt";

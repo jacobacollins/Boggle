@@ -17,6 +17,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 
+/**
+ * @author Jacob Collins
+ * @version 1.3
+ * All GUI components for the Boggle Game.
+ */
 public class BoggleGUI extends Application {
 
 
@@ -34,7 +39,7 @@ public class BoggleGUI extends Application {
     private HBox rightPane;
     private TextArea correct, incorrect;
     private GridPane center;
-    private FlowPane bottom; 
+    private FlowPane bottom;
     private TextField entry;
 
 

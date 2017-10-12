@@ -1,8 +1,11 @@
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-
 import java.util.Optional;
-
+/**
+ * @author Jacob Collins
+ * @version 1.3
+ * Main Menu so player can choose the size of the board
+ */
 public class MainMenuDialog {
 
     private ButtonType four, five;

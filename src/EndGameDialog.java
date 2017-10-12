@@ -1,13 +1,18 @@
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
 
+
+/**
+ * @author Jacob Collins
+ * @version 1.3
+ * End Game Menu for Boggle Game
+ */
 public class EndGameDialog
 {
 
-    private Button quit, exit;
+    
     private Alert dialog = new Alert(Alert.AlertType.INFORMATION);
 
     /**
