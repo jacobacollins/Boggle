@@ -41,13 +41,15 @@ public class BoggleGUI extends Application {
     /**
      * blank constructor
      */
-    public BoggleGUI() {
+    public BoggleGUI()
+    {
 
 
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws Exception
+    {
 
         tileX = -1;
         tileY = -1;
@@ -62,10 +64,10 @@ public class BoggleGUI extends Application {
         scoreCounter = 0;
         clicked = new boolean[boardSize][boardSize];
         boggle = new Board(boardSize);
-        boggle.readLines("src/OpenEnglishWordList.txt", dictionary);
-        correctAnswers = new ArrayList<String>(boggle.findAllWords(boggle.getBoardArray(), dictionary));
+        boggle.readLines(dictionary);
+        correctAnswers = new ArrayList<String>(boggle.findAllWords(boggle.getBoardArray(),  dictionary));
+        System.out.println(dictionary);
 
-        System.out.println(correctAnswers);
 
         rightGuesses = new ArrayList<String>();
         wrongGuesses = new ArrayList<String>();
@@ -147,8 +149,8 @@ public class BoggleGUI extends Application {
 
 
         //adding various listeners
-        addButtonListener();
-        clearButtonListener();
+       // addButtonListener();
+       // clearButtonListener();
         textEntryListener();
 
         //prepping the stage
@@ -160,18 +162,20 @@ public class BoggleGUI extends Application {
 
     /**
      * This takes the backend components of the grid and assigns a button to each value
-     *
      */
-    private void makeBoardButtons() {
-        for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
+    private void makeBoardButtons()
+    {
+        for (int i = 0; i < boardSize; i++)
+        {
+            for (int j = 0; j < boardSize; j++)
+            {
                 boardButtons[i][j] = new Button(String.valueOf(boggle.getBoardChar(i, j)));
 
                 boardButtons[i][j].setPrefSize(45, 45);
                 boardButtons[i][j].setStyle("-fx-background-color: wheat; " +
                         "-fx-border-color: black;" +
                         "-fx-padding: 5 5 5 5");
-                boardButtonListener(boardButtons[i][j]);
+             //   boardButtonListener(boardButtons[i][j]);
 
                 center.add(boardButtons[i][j], i, j);
             }
@@ -182,12 +186,14 @@ public class BoggleGUI extends Application {
      * This resets our tile positions and then resets our string builder and then enables all buttons on
      * the board
      */
-    private void clearGuess() {
+    private void clearGuess()
+    {
         tileX = -1;
         tileY = -1;
 
         string.setLength(0);
-        for (int i = 0; i < boardSize * boardSize; i++) {
+        for (int i = 0; i < boardSize * boardSize; i++)
+        {
 
             center.getChildren().get(i).setDisable(false);
 
@@ -202,21 +208,28 @@ public class BoggleGUI extends Application {
      * as well as update the score.
      */
     private void addButtonListener() {
-        add.setOnAction(new EventHandler<ActionEvent>() {
+        add.setOnAction(new EventHandler<ActionEvent>()
+        {
             @Override
-            public void handle(ActionEvent event) {
-                if (event.getSource().equals(add)) {
+            public void handle(ActionEvent event)
+            {
+                if (event.getSource().equals(add))
+                {
 
-                    if (correctAnswers.contains(string.toString())) {
+                    if (correctAnswers.contains(string.toString()))
+                    {
                         correct.appendText("\n" + string);
                         guesses.setText(string.toString() + " is a valid word");
                         rightGuesses.add(string.toString());
-                        if(string.toString().length() > 0) {
+                        if (string.toString().length() > 0)
+                        {
                             scoreCounter += (string.toString().length() - 2) * 100;
                         }
                         score.setText("Score: " + scoreCounter);
 
-                    } else {
+                    }
+                    else
+                        {
                         incorrect.appendText("\n" + string);
                         guesses.setText(string.toString() + " is not a valid word");
                         wrongGuesses.add(string.toString());
@@ -234,19 +247,27 @@ public class BoggleGUI extends Application {
      *
      * @param b The button that is clicked
      */
-    private void boardButtonListener(Button b) {
-        b.setOnAction(new EventHandler<ActionEvent>() {
+    private void boardButtonListener(Button b)
+    {
+        b.setOnAction(new EventHandler<ActionEvent>()
+        {
             @Override
-            public void handle(ActionEvent event) {
-                if (event.getSource().equals(b)) {
+            public void handle(ActionEvent event)
+            {
+                if (event.getSource().equals(b))
+                {
 
 
-                    for (int i = 0; i < boardSize; i++) {
-                        for (int j = 0; j < boardSize; j++) {
-                            if (event.getSource() == boardButtons[i][j]) {
+                    for (int i = 0; i < boardSize; i++)
+                    {
+                        for (int j = 0; j < boardSize; j++)
+                        {
+                            if (event.getSource() == boardButtons[i][j])
+                            {
 
                                 if ((tileX != -1 && tileY != -1) && (Math.abs(tileX - i) <= 1 && Math.abs(tileY - j) <= 1)
-                                        || (tileX == -1 && tileY == -1)) {
+                                        || (tileX == -1 && tileY == -1))
+                                {
 
                                     string.append(boggle.getBoardChar(i, j));
                                     guesses.setText(string.toString());
@@ -256,7 +277,9 @@ public class BoggleGUI extends Application {
                                     clicked[i][j] = true;
 
                                     boardButtons[i][j].setDisable(true);
-                                } else {
+                                }
+                                else
+                                {
 
                                     break;
                                 }
@@ -276,11 +299,13 @@ public class BoggleGUI extends Application {
     /**
      * Clear the current word that is being guessed
      */
-    private void clearButtonListener() {
+    private void clearButtonListener()
+    {
 
         clear.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(ActionEvent event)
+            {
                 clearGuess();
             }
         });
@@ -290,29 +315,37 @@ public class BoggleGUI extends Application {
     /**
      * This handles words that are guessed from the text field
      */
-    private void textEntryListener() {
-        entry.setOnAction(new EventHandler<ActionEvent>() {
+    private void textEntryListener()
+    {
+        entry.setOnAction(new EventHandler<ActionEvent>()
+        {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(ActionEvent event)
+            {
                 if (entry.getText() != null
                         && event.getSource() == entry
-                        && !entry.getText().isEmpty()) {
+                        && !entry.getText().isEmpty())
+                {
 
-                    if (correctAnswers.contains(entry.getText())) {
+                    if (dictionary.contains(entry.getText()))
+                    {
 
                         guesses.setText(entry.getText() + " is a valid word");
                         rightGuesses.add(entry.getText());
                         correct.appendText("\n" + entry.getText());
-                        if(entry.getText().length() > 0) {
+                        if (entry.getText().length() > 0)
+                        {
                             scoreCounter += (entry.getText().length() - 2) * 100;
                         }
                         entry.setText("");
                         score.setText("Score: " + scoreCounter);
-                    } else {
+                    }
+                    else
+                    {
 
                         guesses.setText(entry.getText() + " is not a valid word");
                         wrongGuesses.add(entry.getText());
-                        incorrect.appendText("\n" +entry.getText());
+                        incorrect.appendText("\n" + entry.getText());
                         entry.setText("");
                     }
                 }
@@ -323,10 +356,12 @@ public class BoggleGUI extends Application {
 
     /**
      * The timer will run based on milliseconds passed in, conversion will be done, and when it reaches zero we will display our end game screen.
-     * @param mil The milliseconds from which the timer will start
+     *
+     * @param mil    The milliseconds from which the timer will start
      * @param parent The parent stage, passed in so we can tie it to the end Game dialog when the timer runs out
      */
-    private void timerLabel(int mil, Stage parent){
+    private void timerLabel(int mil, Stage parent)
+    {
         Timeline timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
 
@@ -334,10 +369,12 @@ public class BoggleGUI extends Application {
 
         timeline.getKeyFrames().add(
                 new KeyFrame(Duration.seconds(1),
-                        new EventHandler<ActionEvent>() {
+                        new EventHandler<ActionEvent>()
+                        {
                             @Override
 
-                            public void handle(ActionEvent event) {
+                            public void handle(ActionEvent event)
+                            {
 
 
                                 timer.setAlignment(Pos.TOP_CENTER);
@@ -350,12 +387,13 @@ public class BoggleGUI extends Application {
                                 timer.setAlignment(Pos.CENTER);
                                 if (time > 0) {
                                     time -= 1000;
-                                } else{
+                                }
+                                else
+                                {
                                     timeline.stop();
                                     System.out.println("Done");
                                     EndGameDialog end = new EndGameDialog(parent, scoreCounter, rightGuesses, wrongGuesses, correctAnswers);
-                               }
-
+                                }
 
 
                             }
@@ -364,7 +402,8 @@ public class BoggleGUI extends Application {
         timeline.playFromStart();
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args)
+    {
         launch(args);
     }
 }

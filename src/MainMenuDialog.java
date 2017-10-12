@@ -11,7 +11,8 @@ public class MainMenuDialog {
     /**
      * Constructor for Main Menu
      */
-    public MainMenuDialog() {
+    public MainMenuDialog()
+    {
 
         //easier to use alert then to make anothe gui
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -27,9 +28,12 @@ public class MainMenuDialog {
 
         //checking to see what button was pressed and changing boardsize accordingly
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == four) {
+        if (result.get() == four)
+        {
             this.boardSize = 4;
-        } else if (result.get() == five) {
+        }
+        else if (result.get() == five)
+        {
             this.boardSize = 5;
         }
 
@@ -37,9 +41,11 @@ public class MainMenuDialog {
 
     /**
      * Getter for board size to be used in Boggle GUI class
+     *
      * @return boardSize
      */
-    public int getSize() {
+    public int getSize()
+    {
         return this.boardSize;
     }
 

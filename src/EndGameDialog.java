@@ -1,36 +1,38 @@
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+
 import java.util.ArrayList;
 
-public class EndGameDialog {
+public class EndGameDialog
+{
 
-private Button quit, exit;
-private Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+    private Button quit, exit;
+    private Alert dialog = new Alert(Alert.AlertType.INFORMATION);
 
     /**
      * End Game Dialog Constructor
      * Displays score, words guessed correctly, incorrectly, and the list of valid words
-     * @param parent parent stage to be closed when this window closes
-     * @param score final score
-     * @param right words guessed that were correct
-     * @param wrong words guessed that were wrong
+     *
+     * @param parent     parent stage to be closed when this window closes
+     * @param score      final score
+     * @param right      words guessed that were correct
+     * @param wrong      words guessed that were wrong
      * @param allAnswers list of all valid words that would have been accepted
      */
-    public EndGameDialog(Stage parent, int score, ArrayList<String> right, ArrayList<String> wrong, ArrayList<String> allAnswers){
+    public EndGameDialog(Stage parent, int score, ArrayList<String> right, ArrayList<String> wrong, ArrayList<String> allAnswers)
+    {
 
-    dialog.setTitle("Game Over");
-    dialog.setHeaderText("Your score is " + score);
-    dialog.setContentText("The words you correctly guessed were \n\t" + right +
-            "\n\n The words you guessed incorrectly were \n\t" + wrong +
-            "\n\nA list of acceptable words would have been \n\t" + allAnswers);
+        dialog.setTitle("Game Over");
+        dialog.setHeaderText("Your score is " + score);
+        dialog.setContentText("The words you correctly guessed were \n\t" + right +
+                "\n\n The words you guessed incorrectly were \n\t" + wrong +
+                "\n\nA list of acceptable words would have been \n\t" + allAnswers);
 
 
+        dialog.show();
 
-
-    dialog.show();
-
-    dialog.setOnHidden(evt -> parent.close());
+        dialog.setOnHidden(evt -> parent.close());
     }
 }
 
