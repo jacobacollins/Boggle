@@ -3,11 +3,11 @@ Simple Boggle game, where the user is allowed to choose between a board of dimen
 Guess words either clicking on the board or entering words in the text field.
 
 
-#Tech/Framework used
+# Tech/Framework used
 Developed on an intellij platform
 
-#Code Style
+# Code Style
 Standard universal coding style.
 
-#Use
+# Use
 Compile program on any standard JVM to play the game.
