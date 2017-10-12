@@ -78,7 +78,7 @@ public class Board {
         if (board[row][col] == word.charAt(wordSize)) {
             char temp = board[row][col];
             visited[row][col] = true;
-            // board[row][col] = '#';
+
 
             if (wordSize == word.length() - 1) {
 

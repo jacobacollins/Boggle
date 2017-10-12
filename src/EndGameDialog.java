@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class EndGameDialog
 {
 
-    
+
     private Alert dialog = new Alert(Alert.AlertType.INFORMATION);
 
     /**
